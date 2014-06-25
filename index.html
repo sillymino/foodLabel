@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Categorize Words</title>
+    <link rel="stylesheet" type="text/css" href="css/yui-reset.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!-- <script type="text/javascript" src="js/jquery.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/util.js"></script>
+    <!--<script type="text/javascript" src="js/task-reader.js"></script>
+    <script type="text/javascript" src="js/i18n.js"></script> -->
+    <script type="text/javascript" src="js/main.js"></script>
+</head>
+
+<body>
+    <form id="answerForm" method="POST" action="https://www.mturk.com/mturk/externalSubmit">
+        <div id="introDiv">
+            <div id="warning">
+                IMPORTANT: You must ACCEPT the HIT before you can submit the answers.
+            </div>
+            <div id="instructionsDiv">
+                <h2>Instructions</h2>
+                <div id="innerInstructionsDiv">
+                    <div id="innerInstructionsUpper">
+                        <p class="centerize">... loading instructions ...</p>
+                        <!-- Instructions will appear here -->
+                    </div>
+                    <h3>Additional Examples [<span id="toggleExtraExamples" class="fakeLink">...</span>]</h3>
+                    <div id="examples" class="sampleSentence" style="display: none">
+                        <!-- Example sentences will be here -->
+                        This is an example sentence
+                    </div>
+                </div>
+            <div id="loadingStartDiv" class="centerize">
+                <p><strong>... loading questions ...</strong></p>
+                <p>(If this message does not disappear, please make sure that JavaScript is turned on)</p>
+                <p class="hidden"><button id="startButton" type="button" class="bigButton">Start</button></p>
+            </div>
+        </div>
+        <div id="questionsDiv" class="hidden">
+            <div id="navPanel" class="centerize">
+                <p><button id="instructionButton" type="button" class="bigButton">Instructions</button>
+                    <span class="header">Question <span id="questionNum">? / ?</span></span>
+                    <button id="prevButton" type="button" class="bigButton">Previous</button>
+                    <button id="nextButton" type="button" class="bigButton">Next</button></p>
+            </div>
+        </div>
+        <div id="finalDiv" class="hidden">
+            <h2 id="thankyou">Thank you!</h2>
+            <p id="feedbackPrompt">(Optional) Please let us know how we can make this HIT better.</p>
+            <p>
+                <textarea id="feedback" name="feedback" rows="3" cols="50"></textarea>
+            </p>
+            <div id="submitDiv" class="centerize">
+                <input type="hidden" id="assignmentId" name="assignmentId" value="">
+                <input type="hidden" id="dataIndex" name="dataIndex" value="">
+                <input type="hidden" id="categories" name="categories" value="">
+                <button id="prevLastButton" type="button" class="bigButton">Back</button>
+                <button type="submit" class="bigButton" disabled id="submitButton">Submit</button>
+            </div>
+        </div>
+    </form>
+
+    <div id="categoryPopup" class="hidden">
+        <!-- Popup table will be here -->
+    </div>
+</body>
+</html>
