@@ -72,12 +72,16 @@ function parseXML(data) {
             text = text.split(separator);
             var cat = (node.nodeName === 'C') ? $(node).attr("n") : null;
             for (i = 0; i < text.length; i++) {
-                labels.push(cat);
+            	if (cat !== null) {
+            		labels.push(cat);
+            	}
+                //labels.push(cat);
             }
         });
         sampleSentences.push([sentence, labels]);
     });
 
+    alert(sampleSentences);
     // Return the task JSON
     return {
         domain: get('domain'),
@@ -92,6 +96,94 @@ function parseXML(data) {
     };
 };
 
+function createPopupTable() {
+	// Create variables needed
+	var table = $("<table>"), i, rows = [], n = categories.length;
+	var numRows = (n <= 7 ? n : Math.ceil(n/2)); // 2 columns for > 7 categories
+
+	for(i=0; i<n; i++) {
+		// Make an entry for the cateogry
+		var td = $("<td>").addClass("c" + i.toString()).text(categories[i]);
+
+		if (i<numRows) {
+			//Haven't reached the end of the categories
+			// add a new row with the cateogry entry
+			rows.push($("<tr>").appendTo(table).append(td));
+		} else {
+			rows[i-numRows].append(td);
+		}
+
+		//at this point in the for loop, the popup table seems to be created
+		//I'm not sure what this next bit is supposed to be doing
+
+		// If the cateogory is in the sample phrases
+		if (TASK.samplePhrases[categories[i]] !== undefined) {
+			// make a paragraph 
+			var line = $("<p>").appendTo($("#keyExplanationInner")) // keyExplanationInner doesn't exist
+				.append($("<span>").addClass("category c" + i.toString())
+					.text(categories[i]," ");
+
+			if (TASK.explanationPhrases && TASK.explanationPhrases[categories[i]]) {
+				line.append(TASK.explanationPhrases[categories[i]]);
+			}
+
+			line.append($("<span>").addClass("examples")
+				.text(TASK.samplePhrases[categories[i]], " "));
+
+			if (TASK.extraExplanationPhrases && TASK.extraExplanationPhrases[categories[i]]) {
+				$("<p>").appendTo($("#keyExplanationInner"))
+				.html(TASK.extraExplanationPhrases[categories[i]]);
+			}
+		}
+	}
+
+	$("#categoryPopup").append(table);
+
+	// This is (probably) a means to give classes to the categories in the examples, thus allowing the css to style them
+	$("#innerInstructionDiv .category").each(function (index, elt) {
+		$(elt).addClass("c" + categories.indexOf($(elt).text()).toString(36));
+	});
+};
+
+function iDK() {
+	var examplesDiv = $("#examples"), i;
+	TASK.sampleSentences.forEach(function (sentence, index) {
+		var sentenceP = $("#example" + index);
+		if(sentenceP.length ===0 ) {
+			sentenceP = $("<div>").appendTo(examplesDiv);
+		}
+
+		var splitted = sentence[0].split(_T.wordSeparator);
+
+		var cue = parseInt(splitted[0]);
+
+		for (i=1; i<splitted.length; i++) {
+			var wordDiv = $("<div class='wordDiv'>").appendTo(sentenceP);
+
+			if (i== cue) {
+				var wordSpan = $("<p class='cueSpan'>").text(splitted[i])
+					.appendo(wordDiv);
+			} else {
+				var wordCat = $("<p class='wordCat'>").text("\xA0").appendTo(wordDivK);
+				var wordSpan = $("<p class='wordSpan'>").text(splitted[i]).appendTo(wordDiv);
+				var categoryNumber = categories.indexOf(sentence[1][i]);
+				if (categoryNumber !== -1) {
+					wordCat.text(categories[categoryNumber]);
+					wordSpan.addClass("c" + categoryNumber.toString(36));
+				} else if (sentence[1][i] !== null) {
+					// Prevent incorrectly-spelled categories
+					wordSpan.addClass("c_");
+				}
+			}
+		}
+
+		$("<div class='clearFix sep'>").appendTo(sentenceP.parent());
+
+	});
+
+	$("#categories").val(categories);
+};
+
 function failure(data) {
 	// Change "... loading questions ..."
 	$("#loadingMessage").text("Unable to load questions");
@@ -102,7 +194,7 @@ function failure(data) {
 	} else {
 		$("#wrapper").append("ERROR: Cannot load task '" + taskName + "'");
 	}
-}
+};
 
 function complete(data) {
 	// if successful, no need to display wrapper message
@@ -132,86 +224,10 @@ function complete(data) {
 	var categories = TASK.cats;
 
 	// create popup table for labels
-	(function() {
-		// Create variables needed
-		var table = $("<table>"), i, rows = [], n = categories.length;
-		var numRows = (n <= 7 ? n : Math.ceil(n/2)); // 2 columns for > 7 categories
+	createPopupTable();
 
-		for(i=0; i<n; i++) {
-			var td = $("<td>").addClass("c" + i.toString(36)).text(categories[i]);
-			if (i < numRows) {
-				rows.push($("<tr>").appendTo(table).append(td));
-			} else {
-				rows[i-numRows].append(td);
-			}
-
-			// Load sample phrases
-			if (TASK.samplePhrases[categories[i]] !== undefined) {
-				var line = $("<p>").appendTo($("#keyExplanationInner"))
-					.append($("<span>").addClass("category c" + i.toString(36))
-						.text(categories[i]), " ");
-
-				if (TASK.explanationPhrases && TASK.explanationPhrases[categories[i]]) {
-					line.append(TASK.explanationPhrases[categories[i]]);
-				}
-
-				line.append($("<span>").addClass("examples")
-					.text(TASK.samplePhrases[categories[i]], " "));
-
-				if (TASK.extraExplanationPhrases && TASK.extraExplanationPhrases[categories[i]]) {
-					$("<p>").appendTo($("#keyExplanationInner"))
-						.html(TASK.extraExplanationPhrases[categories[i]]);
-				}
-			}
-		}
-
-		$("#categoryPopup").append(table);
-	    $("#innerInstructionDiv .category").each(function (index, elt) {
-	        $(elt).addClass("c" + categories.indexOf($(elt).text()).toString(36));
-	    });
-
-	} ());
-
-	(function () {
-		var examplesDiv = $("#examples"), i;
-		TASK.sampleSentences.forEach(function (sentence, index) {
-			var sentenceP = $("#example" + index);
-			if(sentenceP.length ===0 ) {
-				sentenceP = $("<div>").appendTo(examplesDiv);
-			}
-
-			var splitted = sentence[0].split(_T.wordSeparator);
-
-			var cue = parseInt(splitted[0]);
-
-			for (i=1; i<splitted.length; i++) {
-				var wordDiv = $("<div class='wordDiv'>").appendTo(sentenceP);
-
-				if (i== cue) {
-					var wordSpan = $("<p class='cueSpan'>").text(splitted[i])
-						.appendo(wordDiv);
-				} else {
-					var wordCat = $("<p class='wordCat'>").text("\xA0").appendTo(wordDivK);
-					var wordSpan = $("<p class='wordSpan'>").text(splitted[i]).appendTo(wordDiv);
-					var categoryNumber = categories.indexOf(sentence[1][i]);
-					if (categoryNumber !== -1) {
-						wordCat.text(categories[categoryNumber]);
-						wordSpan.addClass("c" + categoryNumber.toString(36));
-					} else if (sentence[1][i] !== null) {
-						// Prevent incorrectly-spelled categories
-						wordSpan.addClass("c_");
-					}
-				}
-			}
-
-			$("<div class='clearFix sep'>").appendTo(sentenceP.parent());
-
-		});
-
-		$("#categories").val(categories);
-
-	} ());
-
+	// I have no idea what this function is doing at the moment
+	iDK();
 
 	var dragging = false, showingPopup = false, dragStartSpan, dragRange;
 
