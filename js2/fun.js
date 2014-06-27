@@ -42,7 +42,11 @@ function parseXML(data) {
 	};
 
 	// Replace instructions
-	$('#innerInstructionUpper').html(data.find('instructions').children());
+	$("#innerInstructionsUpper").empty();
+	data.find("instructions").children().each(function(index,child) {
+		$("#innerInstructionsUpper").append(child.innerHTML);
+		$("#innerInstructionsUpper").append("<br><br>");
+	});
 
 	// Load categories
     var cats = [], samplePhrases = {};
@@ -73,8 +77,6 @@ function parseXML(data) {
         });
         sampleSentences.push([sentence, labels]);
     });
-
-    alert(samplePhrases);
 
     // Return the task JSON
     return {
