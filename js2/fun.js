@@ -1,5 +1,5 @@
 /*
-	A javascript file with a bunch of useful functions
+	A bunch of useful functions
 */
 var questionDivArray = [], currentQuestion = -1, savedQuestion = 0;
 
@@ -74,6 +74,8 @@ function parseXML(data) {
         sampleSentences.push([sentence, labels]);
     });
 
+    alert(samplePhrases);
+
     // Return the task JSON
     return {
         domain: get('domain'),
@@ -85,7 +87,6 @@ function parseXML(data) {
         explanationPhrases: explanationPhrases,
         extraExplanationPhrases: extraExplanationPhrases,
         sampleSentences: sampleSentences
-        alert(cats);
     };
 };
 
