@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task>
+  
+  <!-- Domain (currently ignored) -->
+  <domain>breakfast</domain>
+  
+  <!-- Language (en, zh-simp, zh-trad) -->
+  <lang>en</lang>
+
+  <!-- Instructions -->
+  <!--
+      Special features:
+      - Use <span id="numQuestionsIntro">several</span>
+        to display the number of questions.
+      - Use <span class="category>Airline</span>
+        to display "Airline" category box.
+      - Use <div class="sampleSentence" id="example7"></div>
+        to display example sentence #7.
+  -->
+  <instructions>
+    <p> You will be presented with several descriptions of meals. For each description, label the individual food items. Select a phrase to label as a food item by dragging from the first word to the last word, then select the category "Food" from the popup menu. </p>
+  </instructions>
+
+  <!-- Maximum number of questions -->
+  <maxQuestions>10</maxQuestions>
+  
+  <!--
+      Normally, the data JSON should follow the format
+        ["query 1", "query 2", ...]
+      If hasHint = true, the HINT for each question can also be specified
+      in the JSON file as follows:
+        [["query 1", "hint 1"], ["query 2", "hint 2"], ...]
+      The hint will be shown in the lower right corner.
+  -->
+  <hasHint>true</hasHint>
+
+  <!-- Categories -->
+  <!--
+      Possible tags:
+      - name: The category name
+      - samples: sample phrases shown in the "Categories and Sample Phrases" box
+      - explanation: explanation that appears before the sample phrases
+      - extraExplanation: explanation that appears after the sample phrases
+  -->
+  <cats>
+    <cat>
+      <name>(None)</name>
+    </cat>
+    <cat>
+      <name>Food</name>
+      <samples>cartoon</samples>
+    </cat>
+  </cats>
+
+  <!-- Sample sentences -->
+  <sampleSentences>
+    <example>
+      This morning at home at aprroximately 8am I made two scrabbled <c n="Food">eggs</c> , and three pieces of Oscar Meyer <c n="Food">bacon</c> fried in a pan . I also toasted a piece of homemade <c n="Food">bread</c> and put approximately one tablespoon of <c n="Food">butter</c> and approximately one tablespoon of homemade <c n="Food">jam</c> . I finished off breakfast with a glass of <c n="Food">orange juice</c> .
+    </example>
+    <example>
+      I had an <c n="Food">sausage egg Mc muffin</c> , a medium <c n="Food">coffee</c> and a small container of <c n="Food">orange juice</c> all from McDonald's.
+    </example>
+  </sampleSentences>
+
+</task>

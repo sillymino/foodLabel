@@ -22,8 +22,16 @@ form {
     margin: 3.5em auto 2em;
 }
 
-#warning, #jsWarning {
+#warning {
     display: none;
+    color: red;
+    font-size: 138.5%;
+    font-weight: bold;
+    margin-top: 1em;
+    text-align: center;
+}
+
+#jsWarning {
     color: red;
     font-size: 138.5%;
     font-weight: bold;

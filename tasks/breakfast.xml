@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task>
+  
+  <!-- Domain (currently ignored) -->
+  <domain>food</domain>
+  
+  <!-- Language (en, zh-simp, zh-trad) -->
+  <lang>en</lang>
+
+  <!-- Instructions -->
+  <!--
+      Special features:
+      - Use <span id="numQuestionsIntro">several</span>
+        to display the number of questions.
+      - Use <span class="category>Airline</span>
+        to display "Airline" category box.
+      - Use <div class="sampleSentence" id="example7"></div>
+        to display example sentence #7.
+  -->
+  <instructions>
+    <p> You will be presented with several descriptions of meals. Within each description, one food item will be highlighted in red text. Categorize the words associated with that food item. Select a phrase to categorize by dragging from the first word to the last word, then select the relevant category from the popup menu. </p>
+    <p><strong>Please review all categories and sample phrases before you begin!</strong></p>
+
+    <p> For example:</p>
+    <div class="sampleSentence" id="example0">Here is a sample sentence</div>
+
+  </instructions>
+
+  <!-- Maximum number of questions -->
+  <maxQuestions>10</maxQuestions>
+  
+  <!--
+      Normally, the data JSON should follow the format
+        ["query 1", "query 2", ...]
+      If hasHint = true, the HINT for each question can also be specified
+      in the JSON file as follows:
+        [["query 1", "hint 1"], ["query 2", "hint 2"], ...]
+      The hint will be shown in the lower right corner.
+  -->
+  <hasHint>true</hasHint>
+
+  <!-- Categories -->
+  <!--
+      Possible tags:
+      - name: The category name
+      - samples: sample phrases shown in the "Categories and Sample Phrases" box
+      - explanation: explanation that appears before the sample phrases
+      - extraExplanation: explanation that appears after the sample phrases
+  -->
+  <cats>
+    <cat>
+      <name>(None)</name>
+    </cat>
+    <cat>
+      <name>Brand</name>
+      <samples>Trader Joe's, Kellog's, homemade...</samples>
+    </cat>
+    <cat>
+      <name>Quantity</name>
+      <samples>a cup, a large bowl, two [eggs]...</samples>
+    </cat>
+    <cat>
+      <name>Description</name>
+      <samples>black [coffee], nonfat [milk]...</samples>
+    </cat>
+  </cats>
+
+  <!-- Sample sentences -->
+  <sampleSentences>
+    <example>
+      18 I had a large bowl of Kellogg 's Frosted Flakes with about <c n=Quantity>a cup</c> of <c n=Description>2 %</c> milk .
+    </example>
+    <example>
+      23 I had two hash browns ( Ore-Ida shredded potato patties ) and a three egg ( Lucerne ) omelet with <c n=Brand>Kraft</c> <c n=Description>Mexican</c> cheese . I made it at home and ate it about 6 : 30 in the morning .
+    </example>
+    <example>
+      8 I had <c n=Quantity>a bowl</c> of <c n=Brand>Trader Joes</c> oatmeal <c n=Description>with cranberries</c> . black starbucks coffee . This was at home at 10 : 00 .
+    </example>
+  </sampleSentences>
+
+</task>

@@ -8,12 +8,15 @@
     <!-- <script type="text/javascript" src="js/jquery.min.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/util.js"></script>
-    <!--<script type="text/javascript" src="js/task-reader.js"></script>
-    <script type="text/javascript" src="js/i18n.js"></script> -->
+    <!-- <script type="text/javascript" src="js/task-reader.js"></script> -->
+    <script type="text/javascript" src="js/funcs.js"></script>
+    <script type="text/javascript" src="js/mouseFunctions.js"></script>
+    <script type="text/javascript" src="js/i18n.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 </head>
 
 <body>
+    <div id="wrapper"></div>
     <form id="answerForm" method="POST" action="https://www.mturk.com/mturk/externalSubmit">
         <div id="introDiv">
             <div id="warning">
@@ -26,15 +29,15 @@
                         <p class="centerize">... loading instructions ...</p>
                         <!-- Instructions will appear here -->
                     </div>
-                    <h3>Additional Examples [<span id="toggleExtraExamples" class="fakeLink">...</span>]</h3>
+                    <h3>Additional Examples [<span id="toggleExtraExamples" class="fakeLink">Show</span>]</h3>
                     <div id="examples" class="sampleSentence" style="display: none">
                         <!-- Example sentences will be here -->
                         This is an example sentence
                     </div>
                 </div>
             <div id="loadingStartDiv" class="centerize">
-                <p><strong>... loading questions ...</strong></p>
-                <p>(If this message does not disappear, please make sure that JavaScript is turned on)</p>
+                <div id="loadingMessage"><strong>... loading questions ...</strong></div>
+                <div id='jsWarning'>(If this message does not disappear, please make sure that JavaScript is turned on)</div>
                 <p class="hidden"><button id="startButton" type="button" class="bigButton">Start</button></p>
             </div>
         </div>
